@@ -27,9 +27,49 @@ class DettaglioStudente(models.Model):
     studente = models.ForeignKey(Studente)
     annoscolastico = models.ForeignKey(AnnoScolastico)
     classe = models.ForeignKey(Classe)
-    scuola = models.ForeignKey(Scuola)
 
     class Meta:
-        unique_together = ("studente", "annoscolastico", "classe", "scuola") 
+        unique_together = ("studente", "annoscolastico", "classe") 
 
+class Professore(models.Model):
+    nome = models.CharField(max_length=100)
+    cognome = models.CharField(max_length=100)
+    data_nascita = models.DateField()
+
+    
+class ProfessoreMateria(models.Model):
+    prof = models.ForeignKey(Professore)
+    materia = models.ForeignKey(Materia)
+    classe = models.ForeignKey(Classe)
+    annoscolastico = models.ForeignKey(AnnoScolastico)
+
+    class Meta:
+        unique_together = ("prof", "materia", "classe") 
+
+class TipoVerifica(models.Model):
+    tipo = models.CharField(max_lenght = 20, primary_key = True)
+    
+class Verifica(models.Model):
+    studente = models.ForeignKey(Studente)
+    prof = models.ForeignKey(Professore)
+    materia = models.ForeignKey(Materia)
+    tipo = models.ForeignKey(TipoVerifica)
+    voto = models.CharField(max_lenght = 20)
+    nota  = models.CharField(max_lenght = 200, null = True)
+    data = models.DateField()
+    annoscolastico = models.ForeignKey(AnnoScolastico)
+    class Meta:
+        unique_together = ("studente", "prof", "data", "tipo") 
+
+class Assenze(models.Model):
+    data = models.DateField()
+    studente = models.ForeignKey(Studente)
+    annoscolastico = models.ForeignKey(AnnoScolastico)
+    
+    class Meta:
+        unique_together = ("data", "studente", "annoscolastico") 
+
+class Giustificazione(models.Model):
+    assenza = models.ForeignKey(Assenze)
+    nota = models.CharField(max_lenght = 200, null = True)
     
