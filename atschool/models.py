@@ -47,15 +47,15 @@ class ProfessoreMateria(models.Model):
         unique_together = ("prof", "materia", "classe") 
 
 class TipoVerifica(models.Model):
-    tipo = models.CharField(max_lenght = 20, primary_key = True)
+    tipo = models.CharField(max_length = 20, primary_key = True)
     
 class Verifica(models.Model):
     studente = models.ForeignKey(Studente)
     prof = models.ForeignKey(Professore)
     materia = models.ForeignKey(Materia)
     tipo = models.ForeignKey(TipoVerifica)
-    voto = models.CharField(max_lenght = 20)
-    nota  = models.CharField(max_lenght = 200, null = True)
+    voto = models.CharField(max_length = 20)
+    nota  = models.CharField(max_length = 200, null = True)
     data = models.DateField()
     annoscolastico = models.ForeignKey(AnnoScolastico)
     class Meta:
@@ -71,5 +71,21 @@ class Assenze(models.Model):
 
 class Giustificazione(models.Model):
     assenza = models.ForeignKey(Assenze)
-    nota = models.CharField(max_lenght = 200, null = True)
+    nota = models.CharField(max_length = 200, null = True)
+
+from django.contrib import admin
+
+admin.site.register(Classe)
+admin.site.register(Scuola)
+admin.site.register(Materia)
+admin.site.register(Verifica)
+admin.site.register(TipoVerifica)
+admin.site.register(Studente)
+admin.site.register(Professore)
+admin.site.register(ProfessoreMateria)
+admin.site.register(DettaglioStudente)
+admin.site.register(AnnoScolastico)
+admin.site.register(Assenze)
+admin.site.register(Giustificazione)
+
     
